@@ -2,9 +2,9 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 6631,
-  "expoServerNgrokUrl": "https://z8-74k.anonymous.food2.exp.direct",
-  "packagerNgrokUrl": "https://packager.z8-74k.anonymous.food2.exp.direct",
-  "ngrokPid": 6648,
-  "webpackServerPort": 19006
+  "packagerPid": 9936,
+  "expoServerNgrokUrl": "https://z8-74k.anonymous.food.exp.direct",
+  "packagerNgrokUrl": "https://packager.z8-74k.anonymous.food.exp.direct",
+  "ngrokPid": 18048,
+  "webpackServerPort": null
 }
