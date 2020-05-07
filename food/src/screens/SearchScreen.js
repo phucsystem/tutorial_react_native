@@ -6,7 +6,7 @@ import ResultsList from "../components/ResultsList";
 
 let debug = require('debug');
 
-const SearchScreen = () => {
+const SearchScreen = ({navigation}) => {
   const [term, setTerm] = useState('');
   const [searchApi, results, errorMessage] = useResults();
   const filterResultsByPrice = (price) => {
@@ -24,9 +24,18 @@ const SearchScreen = () => {
       />
       {errorMessage ? <Text>{errorMessage}</Text> : null}
       <Text>We have found {results.length} results</Text>
-      <ResultsList header="Cost Effective" results={filterResultsByPrice('$')}/>
-      <ResultsList header="Bit Pricier" results={filterResultsByPrice('$$')}/>
-      <ResultsList header="Big Spender" results={filterResultsByPrice('$$$')}/>
+      <ResultsList
+        header="Cost Effective"
+        results={filterResultsByPrice('$')}
+      />
+      <ResultsList
+        header="Bit Pricier"
+        results={filterResultsByPrice('$$')}
+      />
+      <ResultsList
+        header="Big Spender"
+        results={filterResultsByPrice('$$$')}
+      />
     </>
   );
 };
