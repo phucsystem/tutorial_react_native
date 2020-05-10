@@ -9,8 +9,6 @@ const TrackListScreen = ({navigation}) => {
     <Text style={{fontSize: 48}}>Track List Screen</Text>
     <Button title={"Go To Track Detail"} onPress={()=>navigation.navigate("TrackDetail")} />
   </View>);
-
-
 }
 
 const styles = StyleSheet.create({});

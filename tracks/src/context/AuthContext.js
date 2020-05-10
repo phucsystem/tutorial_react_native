@@ -3,6 +3,20 @@ import createDataContext from './createDataContext';
 import trackerApi from '../api/tracker';
 import {navigate} from "../navigationRef";
 
+const tryLocalSignin = dispatch => async () => {
+  const token = await AsyncStorage.getItem('token');
+  if (token.length > 0) {
+    dispatch({type: 'signin', payload: token});
+    navigate('TrackList');
+  } else {
+    navigate('Signup');
+  }
+}
+
+const clearErrorMessage = dispatch => () => {
+  dispatch({type: 'clear_error_message'});
+};
+
 const authReducer = (state, action) => {
   switch (action.type) {
     case 'add_error':
@@ -11,16 +25,14 @@ const authReducer = (state, action) => {
       return {errorMessage: null, token: action.payload};
     case 'signin':
       return {errorMessage: null, token: action.payload};
+    case 'signout':
+      return { token: null, errorMessage: '' };
     case 'clear_error_message':
       return {...state, errorMessage: null};
     default:
       return state;
   }
 };
-
-const clearErrorMessage = dispatch => () =>  {
-  dispatch({type: 'clear_error_message'});
-}
 
 
 const signup = dispatch => async ({email, password}) => {
@@ -40,6 +52,7 @@ const signin = dispatch => async ({email, password}) => {
   try {
     const response = await trackerApi.post('/signin', {email, password});
     await AsyncStorage.setItem('token', response.data.token);
+
     dispatch({type: 'signin', payload: response.data.token});
     navigate('TrackList')
   } catch (err) {
@@ -48,14 +61,15 @@ const signin = dispatch => async ({email, password}) => {
   }
 };
 
-const signout = dispatch => {
-  return () => {
-    // somehow sign out!!!
-  };
+const signout = dispatch => async () => {
+  console.log('signout');
+  await AsyncStorage.removeItem('token');
+  dispatch({type: 'signout'});
+  navigate('loginFlow');
 };
 
 export const {Provider, Context} = createDataContext(
   authReducer,
-  {signin, signout, signup, clearErrorMessage},
+  {signin, signout, signup, clearErrorMessage, tryLocalSignin},
   {token: null, isSignedIn: false}
 );
